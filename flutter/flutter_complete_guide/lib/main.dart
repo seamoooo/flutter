@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+
 // void main() {
 //   runApp(MyApp());
 // }
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
+}
+
+// _をつけるとパブリッククラスになる
+class _MyAppState extends State<MyApp> {
   // 通常の関数宣言をしてしまうとMyappのクラスメソッドになってしまう。
   var questionIndex = 0;
 
   void anserQuestion() {
-    questionIndex = questionIndex + 1;
+    // 変更を監視する要素を伝えて、実行された際にwigitの更新を行う
+    // 対象の箇所のbuikdを行う
+    setState(() {
+      questionIndex = questionIndex + 1;
+    });
     print(questionIndex);
   }
 
@@ -28,7 +42,7 @@ class MyApp extends StatelessWidget {
           ),
           body: Column(
             children: [
-              Text(
+              Question(
                 question[questionIndex],
               ),
               ElevatedButton(
@@ -47,8 +61,6 @@ class MyApp extends StatelessWidget {
                 child: Text('anser 3'),
                 // プロパティに対して直接関数を設定することも可能
                 onPressed: () {
-                  /////// ----
-                  ///
                   print("直接関数を設定できる");
                 },
               ),
