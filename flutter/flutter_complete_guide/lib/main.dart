@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatefulWidget {
 
 // _をつけるとパブリッククラスになる
 class _MyAppState extends State<MyApp> {
-  final questions = const [
+  final _questions = const [
     {
       'questionText': 'what\'s favarit clolor',
       'answer': ['blck', 'white', 'blue']
@@ -35,9 +35,7 @@ class _MyAppState extends State<MyApp> {
 
   var _questionIndex = 0;
 
-  void _anserQuestion() {
-    var aBool = true;
-    if (_questionIndex < questions.length) {}
+  void _answerQuestion() {
     // 変更を監視する要素を伝えて、実行された際にwigitの更新を行う
     setState(() {
       _questionIndex = _questionIndex + 1;
@@ -48,23 +46,16 @@ class _MyAppState extends State<MyApp> {
   @override // flutterので用意されているstatemant 上書きしている際に書くことを推奨左rて言える
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text("hello"),
-          ),
-          body: Column(
-            children: [
-              Question(
-                questions[_questionIndex]['questionText'],
-              ),
-              // スプレッド演算子で、配列の要素を動的に生成
-              ...(questions[_questionIndex]['answer'] as List<String>)
-                  .map((answer) {
-                // callback関数、 関数のポインタを渡して将来的に実行されるようにする
-                return Answer(_anserQuestion, answer);
-              }).toList()
-            ],
-          )),
-    );
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text("hello"),
+            ),
+            body: _questionIndex < _questions.length //三項演算子
+                ? Quiz(
+                    answerQuestion: _answerQuestion,
+                    questionIndex: _questionIndex,
+                    questions: _questions,
+                  )
+                : Result()));
   }
 }

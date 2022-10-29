@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+import './answer.dart';
 
 class Answer extends StatelessWidget {
   // 何もreturnしないので、VoidCabackも設定可能
-  final Function selectHundler;
+  final VoidCallback selectHundler;
   final String answerText;
 
   // コンストラクターとして、関数ををとる
