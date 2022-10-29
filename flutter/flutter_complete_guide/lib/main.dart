@@ -21,26 +21,42 @@ class _MyAppState extends State<MyApp> {
   final _questions = const [
     {
       'questionText': 'what\'s favarit clolor',
-      'answer': ['blck', 'white', 'blue']
+      'answer': [
+        {'text': 'blck', 'score': 0},
+        {'text': 'white', 'score': 0},
+        {'text': 'blue', 'score': 10},
+        {'text': 'yellow', 'score': 30},
+      ]
     },
     {
       'questionText': 'what\s favorit animals',
-      'answer': ['犬', '鳥', '猿']
-    },
-    {
-      'questionText': 'what\'s favarit game',
-      'answer': ['nyantendo', 'sony', 'netoge']
+      'answer': [
+        {'text': '犬', 'score': 0},
+        {'text': '猿', 'score': 0},
+        {'text': '雉', 'score': 10},
+        {'text': '桃太郎', 'score': 30},
+      ]
     },
   ];
 
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
     // 変更を監視する要素を伝えて、実行された際にwigitの更新を行う
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
     print(_questionIndex);
+  }
+
+  void _resetQuiz() {
+    _totalScore = 0;
+    setState(() {
+      _questionIndex = 0;
+    });
   }
 
   @override // flutterので用意されているstatemant 上書きしている際に書くことを推奨左rて言える
@@ -56,6 +72,6 @@ class _MyAppState extends State<MyApp> {
                     questionIndex: _questionIndex,
                     questions: _questions,
                   )
-                : Result()));
+                : Result(_totalScore, _resetQuiz)));
   }
 }
