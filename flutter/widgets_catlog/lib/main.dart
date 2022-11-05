@@ -30,6 +30,9 @@ class MyHomePage extends StatelessWidget {
     ),
   ];
 
+  String titleInput;
+  String amountInput;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +40,7 @@ class MyHomePage extends StatelessWidget {
           title: Text('Flutter App'),
         ),
         body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
@@ -46,6 +49,43 @@ class MyHomePage extends StatelessWidget {
                   color: Colors.blue,
                   child: Text('Flutter'),
                   elevation: 5,
+                ),
+              ),
+              Card(
+                elevation: 5,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      TextField(
+                        decoration: InputDecoration(labelText: 'titile'),
+                        onChanged: (val) {
+                          titleInput = val;
+                        },
+                      ),
+                      TextField(
+                        decoration: InputDecoration(labelText: 'amount'),
+                        onChanged: (val) => amountInput = val,
+                      ),
+                      ElevatedButton(
+                        child: Text(
+                          'Add transactions',
+                          style: TextStyle(
+                            color: Colors.purple,
+                            fontSize: 12,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white, //ボタンの背景色
+                        ),
+                        onPressed: () {
+                          print(titleInput);
+                          print(amountInput);
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
               Container(
