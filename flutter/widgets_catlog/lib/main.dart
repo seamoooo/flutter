@@ -30,8 +30,11 @@ class MyHomePage extends StatelessWidget {
     ),
   ];
 
-  String titleInput;
-  String amountInput;
+  // String titleInput;
+  // String amountInput;
+
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +63,13 @@ class MyHomePage extends StatelessWidget {
                     children: <Widget>[
                       TextField(
                         decoration: InputDecoration(labelText: 'titile'),
-                        onChanged: (val) {
-                          titleInput = val;
-                        },
+                        controller: titleController,
                       ),
                       TextField(
                         decoration: InputDecoration(labelText: 'amount'),
-                        onChanged: (val) => amountInput = val,
+                        controller: amountController,
+                        //   onChanged: (val) => amountInput = val,
+                        // ),
                       ),
                       ElevatedButton(
                         child: Text(
@@ -80,8 +83,7 @@ class MyHomePage extends StatelessWidget {
                           backgroundColor: Colors.white, //ボタンの背景色
                         ),
                         onPressed: () {
-                          print(titleInput);
-                          print(amountInput);
+                          print(titleController.text);
                         },
                       )
                     ],
