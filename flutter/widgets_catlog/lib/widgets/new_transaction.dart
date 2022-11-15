@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 
 class NewTransaction extends StatelessWidget {
-  final Function addNewTransaction;
+  final Function addTx;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
 
-  NewTransaction(this.addNewTransaction);
+  NewTransaction(this.addTx);
+
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+      return;
+    }
+
+    addTx(
+      enteredTitle,
+      enteredAmount,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +33,13 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'titile'),
               controller: titleController,
+              onSubmitted: (_) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: 'amount'),
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData(),
               //   onChanged: (val) => amountInput = val,
               // ),
             ),
@@ -37,13 +54,7 @@ class NewTransaction extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white, //ボタンの背景色
               ),
-              onPressed: () {
-                // addNewTransactionがdouble側の呼び出しのため、parseする
-                addNewTransaction(
-                  titleController.text,
-                  double.parse(amountController.text),
-                );
-              },
+              onPressed: submitData,
             )
           ],
         ),
