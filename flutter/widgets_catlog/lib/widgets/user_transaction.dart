@@ -46,7 +46,6 @@ class _UserTranscationState extends State<UserTranscation> {
         //_addNewTransactionはプライベートメソッドなので、直接呼び出しはできない
         // ポインタを渡す必要がある。
         NewTransaction(_addNewTransaction),
-        TransactionList(_userTransaction),
       ],
     );
   }
