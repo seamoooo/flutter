@@ -1,9 +1,12 @@
+import 'dart:ffi';
+
 import 'models/transaction.dart';
 import 'package:intl/intl.dart';
 import './widgets/transaction_list.dart';
 import './widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
 import './widgets/user_transaction.dart';
+import './widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'Personal Ecpence',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
       home: MyHomePage(),
     );
   }
@@ -24,19 +30,32 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransaction = [
-    Transaction(
-      id: 't1',
-      title: 'new shoes',
-      amount: 70,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'new book',
-      amount: 30,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'new shoes',
+    //   amount: 70,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'new book',
+    //   amount: 30,
+    //   date: DateTime.now(),
+    // ),
   ];
+
+  List<Transaction> get _recentTransaction {
+    // durationはBool Bool test(T a) => condition
+    // whereメソッドで作られるのは、List型ではなくIterable型
+    //なので、toList()メソッドを呼び出してリストに変換する必要があり
+    return _userTransaction.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -81,14 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                width: double.infinity,
-                child: Card(
-                  color: Colors.blue,
-                  child: Text('Flutter'),
-                  elevation: 5,
-                ),
-              ),
+              Chart(_recentTransaction),
               TransactionList(_userTransaction),
             ],
           ),
