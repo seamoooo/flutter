@@ -26,7 +26,7 @@ class TransactionList extends StatelessWidget {
                 Container(
                   height: 200,
                   child: Image.network(
-                    'https://images.wantedly.com/i/Zt7tiUy?h=200&w=200',
+                    'https://assets.st-note.com/img/1641518760788-MkanDxvMaf.png?width=800',
                     fit: BoxFit.cover,
                   ),
                 ),
