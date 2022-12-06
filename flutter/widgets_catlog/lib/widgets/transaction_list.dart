@@ -14,24 +14,26 @@ class TransactionList extends StatelessWidget {
       height: 300,
       // スクロールに応じて要素をbuildする
       child: transactions.isEmpty
-          ? Column(
-              children: <Widget>[
-                Text(
-                  'タスクが空になったよ！！',
-                  style: TextStyle(color: Colors.red),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 200,
-                  child: Image.network(
-                    'https://assets.st-note.com/img/1641518760788-MkanDxvMaf.png?width=800',
-                    fit: BoxFit.cover,
+          ? LayoutBuilder(builder: (ctx, constraints) {
+              return Column(
+                children: <Widget>[
+                  Text(
+                    'タスクが空になったよ！！',
+                    style: TextStyle(color: Colors.red),
                   ),
-                ),
-              ],
-            )
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: constraints.maxHeight * 0.7,
+                    child: Image.network(
+                      'https://assets.st-note.com/img/1641518760788-MkanDxvMaf.png?width=800',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            })
           : ListView.builder(
               itemCount: transactions.length,
               itemBuilder: (ctx, index) {
